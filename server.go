@@ -24,6 +24,10 @@ import (
 // code and response body from the matching sequence, and then repeats the last
 // one in the sequence.
 //
+// Note, that this creates a real HTTP server running locally, and the client
+// fetches real URLs from the network. Always use the base URL provided by URL()
+// method to avoid calling random servers on the Internet in your tests.
+//
 // Tip: pay attention to the status codes when setting a response body: some
 // response codes do not allow a response body. Always check for BodyWriteError
 // in your tests to catch this problem.
@@ -34,10 +38,10 @@ type TestServer struct {
 	ResponseBody      []string            // default response body sequnece
 	RequestPath       string              // path in the request URL
 	RequestQuery      url.Values          // query received by the server in the request
+	Flushed           bool                // whether the body write was flushed
+	BodyWriteBytes    int                 // number of body bytes written
+	BodyWriteError    error               // error value from writing body
 	Server            *httptest.Server
-	Flushed           bool
-	BodyWriteBytes    int
-	BodyWriteError    error
 }
 
 // Close the handle's test server.

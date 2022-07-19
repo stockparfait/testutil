@@ -52,3 +52,15 @@ func RoundSlice(s []float64, places int) []float64 {
 	}
 	return res
 }
+
+// RoundFixedSlice rounds the elements of the slice to the given number of
+// decimal places, for approximate comparisons in tests. This is useful when
+// numbers may be near zero, and therefore have no well-defined number of
+// significant digits.
+func RoundFixedSlice(s []float64, places int) []float64 {
+	res := make([]float64, len(s))
+	for i := range s {
+		res[i] = RoundFixed(s[i], places)
+	}
+	return res
+}

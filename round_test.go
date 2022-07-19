@@ -43,5 +43,10 @@ func TestRound(t *testing.T) {
 			So(RoundSlice([]float64{0.0012345, 12.345, 1234500.0}, 3),
 				ShouldResemble, []float64{0.00123, 12.3, 1230000.0})
 		})
+
+		Convey("RoundFixedSlice", func() {
+			So(RoundFixedSlice([]float64{0.0012345, 12.345, 1234500.0}, 3),
+				ShouldResemble, []float64{0.001, 12.345, 1234500.0})
+		})
 	})
 }
